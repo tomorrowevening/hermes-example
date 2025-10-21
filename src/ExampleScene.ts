@@ -2,7 +2,7 @@ import { hierarchyUUID } from '@tomorrowevening/hermes';
 import { BoxGeometry, Clock, Mesh, MeshNormalMaterial, PerspectiveCamera, Scene, Vector3 } from 'three';
 
 export default class ExampleScene extends Scene {
-  static name = 'Example';
+  static Name = 'Example';
 
   camera: PerspectiveCamera;
   cameraTarget = new Vector3();
@@ -10,7 +10,7 @@ export default class ExampleScene extends Scene {
 
   constructor() {
     super();
-    this.name = ExampleScene.name;
+    this.name = ExampleScene.Name;
 
     this.camera = new PerspectiveCamera(60, innerWidth / innerHeight, 1, 2000);
     this.camera.name = 'exampleCamera';

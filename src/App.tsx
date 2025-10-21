@@ -157,21 +157,25 @@ export default function App() {
   }, []);
 
   const scenes = new Map();
-  scenes.set(ExampleScene.name, ExampleScene);
+  scenes.set(ExampleScene.Name, ExampleScene);
 
   return (
     <>
-      {IS_EDITOR && (
-        <ThreeEditor
-          three={three}
-          scenes={scenes}
-          onSceneUpdate={(scene: any) => {
-            scene.update();
-          }}
-        />
-      )}
+      {IS_DEV && (
+        <>
+          <SceneInspector three={three} />
 
-      {IS_DEV && <SceneInspector three={three} />}
+          {IS_EDITOR && (
+            <ThreeEditor
+              three={three}
+              scenes={scenes}
+              onSceneUpdate={(scene: any) => {
+                scene.update();
+              }}
+            />
+          )}
+        </>
+      )}
       
       {!IS_EDITOR && (
         <>
