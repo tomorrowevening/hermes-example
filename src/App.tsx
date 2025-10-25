@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { WebGLRenderer } from 'three';
 import studio from '@theatre/studio';
 import { getProject, types } from '@theatre/core';
-import { customizeTheatreElements, RemoteTheatre, RemoteThree, rgbaToHex, SceneInspector, ThreeEditor } from '@tomorrowevening/hermes';
+import { customizeTheatreElements, RemoteTheatre, RemoteThree, rgbaToHex, ThreeEditor } from '@tomorrowevening/hermes';
 import '@tomorrowevening/hermes/hermes.css';
 import { IS_DEV, IS_EDITOR } from './constants';
 import ExampleScene from './ExampleScene';
@@ -109,9 +109,7 @@ export default function App() {
 
     // Scene
     const scene = new ExampleScene();
-    three.addScene(scene);
-    three.setScene(scene);
-    three.addCamera(scene.camera);
+    scene.init(three);
 
     // Events
 
@@ -161,20 +159,17 @@ export default function App() {
 
   return (
     <>
-      {IS_DEV && (
-        <>
-          <SceneInspector three={three} />
-
-          {IS_EDITOR && (
-            <ThreeEditor
-              three={three}
-              scenes={scenes}
-              onSceneUpdate={(scene: any) => {
-                scene.update();
-              }}
-            />
-          )}
-        </>
+      {IS_EDITOR && (
+        <ThreeEditor
+          three={three}
+          scenes={scenes}
+          onSceneSet={(scene: any) => {
+            scene.init(three);
+          }}
+          onSceneUpdate={(scene: any) => {
+            scene.update();
+          }}
+        />
       )}
       
       {!IS_EDITOR && (

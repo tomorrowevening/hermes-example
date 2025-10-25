@@ -1,4 +1,4 @@
-import { hierarchyUUID } from '@tomorrowevening/hermes';
+import { hierarchyUUID, RemoteThree } from '@tomorrowevening/hermes';
 import { BoxGeometry, Clock, Mesh, MeshNormalMaterial, PerspectiveCamera, Scene, Vector3 } from 'three';
 
 export default class ExampleScene extends Scene {
@@ -24,6 +24,12 @@ export default class ExampleScene extends Scene {
     hierarchyUUID(this);
 
     this.clock.start();
+  }
+
+  init(three: RemoteThree) {
+    three.addScene(this);
+    three.setScene(this);
+    three.addCamera(this.camera);
   }
 
   update() {
