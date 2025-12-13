@@ -163,7 +163,7 @@ export default function App() {
         <ThreeEditor
           three={three}
           scenes={scenes}
-          onSceneSet={(scene: any) => {
+          onSceneAdd={(scene: any) => {
             scene.init(three);
           }}
           onSceneUpdate={(scene: any) => {
