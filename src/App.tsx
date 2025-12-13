@@ -2,8 +2,8 @@
 import { useEffect, useRef } from 'react';
 import { WebGLRenderer } from 'three';
 import studio from '@theatre/studio';
-import { getProject, types } from '@theatre/core';
-import { customizeTheatreElements, RemoteTheatre, RemoteThree, rgbaToHex, ThreeEditor } from '@tomorrowevening/hermes';
+import { getProject } from '@theatre/core';
+import { customizeTheatreElements, RemoteTheatre, RemoteThree, ThreeEditor } from '@tomorrowevening/hermes';
 import '@tomorrowevening/hermes/hermes.css';
 import { IS_DEV, IS_EDITOR } from './constants';
 import ExampleScene from './ExampleScene';
@@ -20,48 +20,16 @@ if (IS_DEV) {
 }
 
 export default function App() {
-  const divRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // TheatreJS example
   useEffect(() => {
-    console.log('Theatre Setup');
     theatre.project = getProject('Remote Theatre Example', {
       state: {
         "sheetsById": {
-          "Example Sheet": {
-            "staticOverrides": {
-              "byObject": {
-                "Example": {
-                  "position": {
-                    "x": 100,
-                    "y": 100
-                  },
-                  "color": {
-                    "r": 1,
-                    "g": 1,
-                    "b": 1,
-                    "a": 1
-                  }
-                }
-              }
-            },
-            "sequence": {
-              "subUnitsPerUnit": 30,
-              "length": 10,
-              "type": "PositionalSequence",
-              "tracksByObject": {
-                "Example": {
-                  "trackData": {},
-                  "trackIdByPropPath": {}
-                }
-              }
-            }
-          }
         },
         "definitionVersion": "0.4.0",
         "revisionHistory": [
-          "XqcoKBXmvWlUT0RV",
           "0_X3SHD4kxF4l9IB"
         ]
       },
@@ -69,24 +37,6 @@ export default function App() {
 
     theatre.project.ready.then(() => {
       console.log('Project ready');
-
-      const sheetName = 'Example Sheet';
-      theatre.sheet(sheetName);
-      theatre.sheetObject(sheetName, 'Example', {
-        color: types.rgba({ r: 255, g: 255, b: 255, a: 1 }),
-        position: {
-          x: 0,
-          y: 0,
-        },
-      }, (values: any) => {
-        console.log(values);
-        const div = divRef.current;
-        if (div === null) return;
-
-        div.style.left = `${values.position.x}px`;
-        div.style.top = `${values.position.y}px`;
-        div.style.backgroundColor = rgbaToHex(values.color);
-      });
     });
     return () => {
       theatre.dispose();
@@ -175,7 +125,6 @@ export default function App() {
       {!IS_EDITOR && (
         <>
           <canvas ref={canvasRef} />
-          <div id="box" ref={divRef}></div>
         </>
       )}
     </>
